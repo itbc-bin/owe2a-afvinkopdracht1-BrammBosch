@@ -9,13 +9,14 @@
 
 
 def main():
-    try
+    try:
         bestand = "alpaca.fasta" # Voer hier de bestandsnaam van het juiste bestand in, of hernoem je bestand\
-        
+        if ".fasta" not in bestand or ".fa" not in bestand:
+            raise IOError
         zoekwoord = input("Geef een zoekwoord op: ")
         
         headers, seqs = lees_inhoud(bestand) 
-        except    
+          
         lijstZoekwoord = [i for i, s in enumerate(headers) if zoekwoord in s]
         
         i=0
@@ -37,11 +38,14 @@ def main():
                 print("Het is geen DNA sequentie of er zitten andere tekens dan alleen ATCG in.")
             i+=1
             #print(i)
-    except:
+    except IOError:
+        print("Het ingelezen bestand is geen fasta bestand")
+    except KeyboardInterrupt:
+        print("De gebruiker heeft het programma onderbroken")
         
        
 def lees_inhoud(bestand):
-    try
+    try:
         bestand = open(bestand)
         headers = []
         seqs = []
@@ -79,7 +83,7 @@ def is_dna(seqs,index):
 
 
 def knipt(seqs,index,zoekwoord):
-    try
+    try:
         enzymen = open("enzymen.txt")
         enzym_list = []
         i=0
